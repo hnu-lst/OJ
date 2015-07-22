@@ -7,27 +7,40 @@
  * }
  */
 public class Solution {
-     public ListNode mergeKLists(ListNode[] lists) {
+    public ListNode mergeKLists(ListNode[] lists) {
         int len = lists.length;
-        ListNode head;
-        PriorityQueue<ListNode> pq = new PriorityQueue<ListNode>(new Comparator<ListNode>() {
-            @Override
-            public int compare(ListNode n1, ListNode n2) {
-                return n1.val - n2.val;
+        if (len == 0) return null;
+        if (len == 1) return lists[0];
+        if (len == 2) return merge(lists[0], lists[1]);
+        while (len > 1) {
+            for (int i = 0; i < len / 2; i++) {
+                lists[i] = merge(lists[i], lists[len - 1 - i]);
             }
-        });
-        for (int i = 0; i < len; i++) {
-            head = lists[i];
-            while (head != null) {
-                pq.offer(head);
-                head = head.next;
+            len = (len / 2 + len % 2);
+        }
+        return lists[0];
+    }
+
+    private ListNode merge(ListNode l1, ListNode l2) {
+        if (l1 == null && l2 == null) return null;
+        ListNode pre = new ListNode(0);
+        ListNode node = pre;
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                node.next = l1;
+                node = l1;
+                l1 = l1.next;
+            } else {
+                node.next = l2;
+                node = l2;
+                l2 = l2.next;
             }
         }
-        ListNode newhead = head = pq.peek();
-        while (!pq.isEmpty()) {
-            head = pq.poll();
-            head.next = pq.peek();
+        if (l1 == null && l2 != null) {
+            node.next = l2;
+        } else if (l1 != null && l2 == null) {
+            node.next = l1;
         }
-        return newhead;
+        return pre.next;
     }
 }
