@@ -36,7 +36,7 @@ class MedianFinder {
         if (maxHeap.size() == minHeap.size()) {
             return (double) (minHeap.peek() + maxHeap.peek()) / 2;
         } else {
-            return (double)maxHeap.peek();
+            return (double) maxHeap.peek();
         }
     }
 };
