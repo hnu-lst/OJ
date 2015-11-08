@@ -4,8 +4,7 @@ public class Solution {
         long den = denominator;
         if (num == 0) return "0";
         boolean negative = false;
-        if ((numerator < 0 && denominator > 0)
-                || (numerator > 0 && denominator < 0))
+        if ((numerator < 0 && denominator > 0) || (numerator > 0 && denominator < 0))
             negative = true;
         if (num < 0) num = -num;
         if (den < 0) den = -den;
@@ -14,17 +13,17 @@ public class Solution {
         if (num == 0) return negative ? "-" + before : before;
         String after = ".";
         num *= 10;
-        HashMap<Long, Long> remix = new HashMap<>();
+        HashMap<Long, Long> remainder  = new HashMap<>();
         long idx = 1;
         long loop = -1;
         while (true) {
             long r = num % den;
             long x = num / den;
-            if (remix.containsKey(num)) {
-                loop = remix.get(num);
+            if (remainder.containsKey(num)) {
+                loop = remainder.get(num);
                 break;
             } else {
-                remix.put(num, idx);
+                remainder.put(num, idx);
             }
             after += x;
             num = r;
